@@ -14,10 +14,12 @@ export default function AuthWrapper({
   const { user, isLoading, checkAuth } = useAuthStore();
 
   useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
+    if (!user) {
+      checkAuth();
+    }
+  }, [checkAuth, user]);
 
-  if (isLoading) {
+  if (isLoading && pathname.startsWith('/dashboard')) {
     return (
       <section className="h-screen flex justify-center items-center">
         <LoaderIcon className="w-8 h-8 animate-spin" />

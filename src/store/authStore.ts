@@ -87,13 +87,11 @@ export const useAuthStore = create<AuthState>()(
       checkAuth: async () => {
         try {
           set({ isLoading: true });
-
           const user = await account.get();
           const session = await account.getSession('current');
-
           set({ user, session });
         } catch (error) {
-          console.error("Couldn't get user", (error as Error).message);
+          set({ user: null, session: null });
         } finally {
           set({ isLoading: false });
         }
